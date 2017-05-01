@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+    <!-- Backend Controller의 process(){ 포워딩; return "/main.tiles"; }  -->
+	<definition name="main" template="/WEB-INF/views/mainTemplate.jsp">
+		<put-attribute name="title" value="타일즈적용"></put-attribute>
+		<put-attribute name="header" value="/WEB-INF/views/layout/header.jsp"></put-attribute>
+		<put-attribute name="left" value="/WEB-INF/views/layout/left.jsp"></put-attribute>
+		<put-attribute name="content_header" value="/WEB-INF/views/content_header.jsp"></put-attribute>
+		<put-attribute name="footer" value="/WEB-INF/views/layout/footer.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="user/*/*" extends="main">
+		<put-attribute name="content" value="/WEB-INF/views/{1}/{2}.jsp"></put-attribute>
+	</definition>
+	
+</tiles-definitions>
+
+

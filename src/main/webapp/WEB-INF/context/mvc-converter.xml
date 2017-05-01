@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd">
+
+	<!-- 
+		@ResponseBody 활용을 위한 선언
+		@RequestBody : 클라이언트에서 요청 시에 서버로 전송되는 파라메터의 형식 그대로 컨트롤러
+		              메서드에 전달
+		              ex) http://localhost/SpringWebToddler/join/loginCheck.do
+		                       post   mem_id=a001&mem_pass=asdfasdf
+		                  컨트롤러 메서드(@RequestBody String params){
+		                    params =  mem_id=a001&mem_pass=asdfasdf 할당.
+		                 }
+	 -->
+	 <mvc:annotation-driven></mvc:annotation-driven>
+</beans>

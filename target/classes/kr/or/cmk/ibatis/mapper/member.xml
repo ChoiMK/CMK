@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap    
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+    
+    <sqlMap namespace="member">
+    	<typeAlias alias="memberVO" type="kr.or.cmk.vo.MemberVO"/>
+    	<sql id="selectAll">
+    		SELECT *
+    		  FROM MEMBER
+    		 WHERE MEM_DELETE = 'n'
+    	</sql>
+    	<!-- 
+    		Map<String,String> params = new HashMap<String,String>();
+    		params.put("mem_id", mem_id);
+    		params.put("mem_pass", mem_pass);
+    	 -->
+    	<select id="memberInfo" resultClass="memberVO" parameterClass="Map">
+    		<include refid="selectAll"/>
+    			 AND  MEM_ID = #mem_id#
+    			<dynamic prepend="AND">
+    				<isNotEmpty property="mem_pass">
+    					MEM_PASS = #mem_pass#	
+    				</isNotEmpty>	
+    			</dynamic>
+    	</select>
+    	
+    	<!-- 
+    		없을 수도 있음.
+    		
+    		search_keycode : ID or NAME or ADDR
+    		search_keyword : aa 김은대 김 대전 대전광역시
+    	 -->
+    	 
+     <sql id="searchCondition">
+       <dynamic>
+            <isNotEmpty property="mem_add1" prepend="AND">
+                   MEM_ADD1 LIKE '%'||#mem_add1#||'%'               
+                </isNotEmpty>   
+                <isNotEmpty property="mem_hp" prepend="AND">
+                   MEM_HP LIKE '%'||#mem_hp#||'%'  
+                </isNotEmpty>
+                
+                
+                <isNotEmpty property="mem_year" prepend="AND">
+                   MEM_BIR LIKE #mem_year#||'%'
+                </isNotEmpty>
+                 <isNotEmpty property="mem_month" prepend="AND">
+                   MEM_BIR LIKE '%'||#mem_month#||'%'
+                </isNotEmpty>
+                 <isNotEmpty property="mem_day" prepend="AND">
+                   MEM_BIR LIKE '%'||#mem_day#
+                </isNotEmpty>
+                
+                
+<!--                 <isNotEmpty property="mem_date_type" prepend="AND"> -->
+<!--              	   MEM_DATE_TYPE = #mem_date_type# -->
+<!--                 </isNotEmpty> -->
+                                   
+                <isNotEmpty property="search_base" >
+                   <isNotEmpty property="search_base_keyword" prepend="AND">
+                   <isEqual property="search_base" compareValue="mem_id">
+                  		 MEM_ID LIKE '%'||#search_base_keyword#||'%'
+                   </isEqual>
+                   <isEqual property="search_base" compareValue="mem_name">
+                   		MEM_NAME LIKE '%'||#search_base_keyword#||'%'
+                   </isEqual>
+                   </isNotEmpty>
+                </isNotEmpty>
+         </dynamic>
+       </sql>
+
+    	 
+		<select id="memberList" resultClass="memberVO" parameterClass="map">
+		
+		SELECT * 	
+	     FROM	(SELECT ROWNUM rnum, A.*
+	     		 FROM (<include refid="selectAll"/>
+	     				<include refid="searchCondition"/>) A) B
+	     WHERE 1=1
+	     <dynamic prepend="AND">
+			<isNotEmpty property="startCount">
+				<isNotEmpty property="endCount">
+					<![CDATA[
+						B.RNUM <= #startCount#
+						AND B.RNUM >= #endCount#
+					]]>
+				</isNotEmpty>
+			</isNotEmpty>	     
+	     </dynamic>
+	     ORDER BY B.RNUM DESC
+     	</select>
+		
+		<update id="updateAdmin" parameterClass="memberVO">
+         UPDATE MEMBER
+            SET MEM_PASS = #mem_pass#,
+               MEM_ADD1 = #mem_add1#,
+               MEM_HP = #mem_hp#,
+               MEM_MAIL = #mem_mail#,
+               MEM_BIR = #mem_bir#,
+               MEM_DATE_TYPE = #mem_date_type#
+         WHERE MEM_ID = #mem_id#
+      </update>
+		
+		
+		<update id="updateMember" parameterClass="memberVO">
+			UPDATE MEMBER
+				SET MEM_PASS = #mem_pass#,
+					MEM_ZIP = #mem_zip#,
+					MEM_ADD1 = #mem_add1#,
+					MEM_ADD2 = #mem_add2#,
+					MEM_HOMETEL = #mem_hometel#,
+					MEM_COMTEL = #mem_comtel#,
+					MEM_HP = #mem_hp#,
+					MEM_MAIL = #mem_mail#,
+					MEM_JOB = #mem_job#,
+					MEM_LIKE = #mem_like#
+			WHERE MEM_ID = #mem_id#
+		</update>
+		
+		<update id="deleteMember" parameterClass="map">
+			UPDATE MEMBER
+				SET MEM_DELETE = 'y'
+			WHERE MEM_ID = #mem_id#				
+		</update>
+		
+		<insert id="insertMember" parameterClass="memberVO">
+      INSERT INTO MEMBER(
+                     MEM_ID        , 
+                     MEM_PASS       ,
+                     MEM_NAME       ,
+                     MEM_REGNO1     ,
+                     MEM_REGNO2     ,
+                     MEM_BIR        ,
+                     MEM_ZIP        ,
+                     MEM_ADD1       ,
+                     MEM_ADD2       ,
+                     MEM_HOMETEL    ,
+                     MEM_COMTEL     ,
+                     MEM_HP         ,
+                     MEM_MAIL       ,
+                     MEM_JOB        ,
+                     MEM_LIKE 	)      
+      VALUES( #mem_id#,        
+            #mem_pass#       ,
+            #mem_name#       ,
+            #mem_regno1#     ,
+            #mem_regno2#     ,
+            #mem_bir#        ,
+            #mem_zip#        ,
+            #mem_add1#       ,
+            #mem_add2#       ,
+            #mem_hometel#    ,
+            #mem_comtel#     ,
+            #mem_hp#         ,
+            #mem_mail#       ,
+            #mem_job#        ,
+            #mem_like#       
+         )
+   </insert>
+   
+   <select id="totalCount" parameterClass="map" resultClass="int">
+ 	 	SELECT COUNT(MEM_ID)
+ 	 		FROM MEMBER
+ 	 	WHERE MEM_DELETE = 'n'
+ 	 	<include refid="searchCondition"/>
+   </select>
+		
+		
+    </sqlMap>

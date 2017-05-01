@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd">
+
+	<!-- 
+		스프링 프레임웍 내에서 @Transactional 선언 정보와 발생된 익셉션을 기초로
+		Commit or Rollback 처리 설정
+		
+		proxy-target-class : true  - @Transactional이 선언된 해당 메서드를 포함하는 클래스가
+		                               인터페이스를 구현한 클래스가 아닐때 설정.
+		                             cglib 라이브러리 활용.
+		                     false - @Transactional이 선언된 해당 메서드를 포함하는 클래스가
+		                               인터페이스를 구현한 클래스일때.
+	 -->
+	 <tx:annotation-driven transaction-manager="transactionMgr" proxy-target-class="false"/>
+</beans>

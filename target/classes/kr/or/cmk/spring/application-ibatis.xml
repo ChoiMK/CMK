@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jee="http://www.springframework.org/schema/jee"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd">
+
+	<!-- 
+		context : 확장자 properties 파일에 접근
+		          해당 설정파일(xml) 내에서만 properties 파일의 내용을 활용.(지역)
+		          properties 파일의 키의 활용 : ${driver}
+		util    : 확장자 properties 파일에 접근
+		         해당 설정파일(xml) 외 기타 설정파일(xml)에서도 properties 파일의 내용을 활용.(전역)
+		          properties 파일의 키의 활용 : #{util의 id['키']}
+	 -->
+<!--  <context:property-placeholder file-encoding="UTF-8" -->
+<!--        location="classpath:kr/or/ddit/ibatis/config/SqlMapConfig.properties"/> -->
+	         
+	 <!-- 
+	 	DriverManagerDataSource : JDBC SIMPLE 타입만 지원
+	 	SimpleDriverDataSource : 테스트용
+	 	BasicDataSource : DBCP, JNDI 지원
+	  -->
+<!-- 	  <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"> -->
+<!-- 	  	 <property name="driverClassName" value="${driver}"></property> -->
+<!-- 	  	 <property name="url" value="${url}"></property> -->
+<!-- 	  	 <property name="username" value="${username}"></property> -->
+<!-- 	  	 <property name="password" value="${password}"></property> -->
+<!-- 	  	 <property name="maxActive" value="10"></property> -->
+<!-- 	  	 <property name="initialSize" value="1"></property> -->
+<!-- 	  	 <property name="removeAbandoned" value="true"></property> -->
+<!-- 	  	 <property name="removeAbandonedTimeout" value="60"></property> -->
+<!-- 	  </bean> -->
+
+
+
+
+	  <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		     p:driverClassName="#{jdbcConnection['driver']}"
+		     p:url="#{jdbcConnection['url']}"
+		     p:username="#{jdbcConnection['username']}"
+		     p:password="#{jdbcConnection['password']}"
+		     p:maxActive="10"
+		     p:initialSize="1"
+		     p:removeAbandoned="true"
+		     p:removeAbandonedTimeout="60">
+	  </bean>
+	 
+	 
+	 
+<!-- 	  <jee:jndi-lookup id="dataSource" jndi-name="jdbc/ddit"></jee:jndi-lookup> -->
+	  
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	  <bean id="sqlMapClient" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean"
+	  	p:dataSource-ref="dataSource"
+	  	p:configLocation="classpath:kr/or/cmk/ibatis/config/SqlMapConfig.xml"
+	  	p:useTransactionAwareDataSource="true"
+	  	p:transactionConfigClass="com.ibatis.sqlmap.engine.transaction.external.ExternalTransactionConfig">
+	  	<property name="transactionConfigProperties">
+	  		<props>
+	  			<prop key="DefaultAutoCommit">false</prop>
+	  			<prop key="SetAutoCommitAllowed">true</prop>
+	  		</props>
+	  	</property>
+	  </bean>
+	  
+	 
+	 
+	 
+	  <!-- iBatis로부터 회수한 트랜잭션 권한을 스프링의 트랜잭션 매니저에게 위임. -->
+	  <bean id="transactionMgr" class="org.springframework.jdbc.datasource.DataSourceTransactionManager"
+	  	p:dataSource-ref="dataSource">
+	  </bean>
+</beans>
+
+
+
+
+
+
+
+
+
+
+

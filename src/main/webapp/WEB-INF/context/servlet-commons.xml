@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:c="http://www.springframework.org/schema/c"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd">
+	
+	<!-- 
+		JSR-250 스펙 어노테이션과 @Value, @Autowired를 활용 설정.
+	 -->
+<!-- 	<context:annotation-config></context:annotation-config> -->
+	
+	<!-- 
+		context:annotation-config 선언으로 활용할 수 있는 모든 어노테이션과
+		추가적으로 @Controller, @Service, @Repository, @Component 활용 선언
+		@Controller : @Controller가 선언된 클래스는 자동으로 빈 등록(설정파일[xml]에 등록 불필요.)
+		              클라리언트의 요청을 처리할 커맨드 컨트롤러 역활 수행.
+		@Service : @Service가 선언된 클래스는 자동으로 빈 등록(설정파일[xml]에 등록 불필요.)
+		           Service Layer를 구성하는 클래스 상단에 설정.(비지니스 로직)
+		@Repository : @Repository가 선언된 클래스는 자동으로 빈 등록(설정파일[xml]에 등록 불필요.)
+		           Dao Layer를 구성하는 클래스 상단에 설정.(컨넥션을통한 질의)
+		@Component : @Component가 선언된 클래스는 자동으로 빈 등록(설정파일[xml]에 등록 불필요.)
+		           IoC 활용을위한 모든 클래스 상단에 설정.
+	 -->
+	<context:component-scan base-package="kr.or.ddit">
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+	</context:component-scan>
+	<!-- 
+		JAVA JSR-250 : @Value : context or util를 활용해서 properties 파일의 내용을 
+		                         빈 클래스 내 전역변수에서 활용. 
+		               @PreDestroy : 빈 등록시의 destroy-method를 대체
+		               @PostConstruct : 빈 등록시의 init-method를 대체 
+		               @Resource : 빈 클래스 내에 선언된 전역변수, setter를 대상으로 설정파일 내에
+		                          선언된 빈 중에서 타입이 일치하는 빈을 자동 주입.
+		               
+	 -->
+<!-- 	<bean class="org.springframework.context.annotation.CommonAnnotationBeanPostProcessor"></bean> -->
+	
+	<!-- 
+		@Autowired : @Resource와 비슷하게 빈 클래스 내에 선언된 전역변수, 생성자, setter를 대상으로
+		             설정파일 내에 선언된 빈 중에서 타입이 일치하는 빈을 자동 주입.
+	 -->
+<!-- 	<bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor"></bean> -->
+	
+<!-- 	<bean id="joinController" name="join1 join2 join3" class="kr.or.ddit.join.controller.JoinController"> -->
+<!-- 		<constructor-arg ref="memberService"></constructor-arg> -->
+<!-- 	</bean> -->
+	
+	<!-- 
+	    lazy-init : 빈 클래스의 인스턴스화 지연 설정.
+    	            * 스프링 프레임웍은 설정파일 내에 선언된 빈의 인스턴스화를 
+    	              default로 WebApplicationContext의 인스턴스화 처리시에 동반 처리.
+		factory-method : 설정파일 내에 빈 클래스의 인스턴스를 제공하는 반드시 public static한 메서드명을 설정.
+		abstract : 다른 빈 클래스에서 공통 선언되는 빈 등록시의 설정을 미리 정의 추상 빈.
+		           DI 불가능.
+		parent : 추상 빈의 id or name을 활용해서 추상 빈의 속성 선언 상속.
+	 -->
+	
+<!-- 	<bean name="memberService" class="kr.or.ddit.member.service.IMemberServiceImpl" -->
+<!-- 		factory-method="getInstance"> -->
+<!-- 	</bean> -->
+	<bean id="abstractBean" abstract="true"
+	     lazy-init="true" init-method="initMethod" destroy-method="destroyMethod">
+	</bean>
+
+<!--     <bean name="memberService" class="kr.or.ddit.member.service.IMemberServiceImpl" -->
+<!--     	parent="abstractBean"> -->
+<!--     </bean> -->
+<!-- 	<bean name="memberDao" class="kr.or.ddit.member.dao.IMemberDaoImpl" -->
+<!-- 		factory-method="getInstance"></bean> -->
+<!--     <bean name="memberDao" class="kr.or.ddit.member.dao.IMemberDaoImpl" -->
+<!--     	parent="abstractBean"> -->
+<!--     </bean> -->
+</beans>
+
+
+
+
+
+
+

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:c="http://www.springframework.org/schema/c"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+
+	<!-- 
+		스프링 프레임웍이 적용된 웹 어플리케이션에서의 다국어 처리
+		    1. html tag의 text, label
+		    2. alert, 모달, 모달리스의 메세지
+		    3. 웹 어플리케이션 내에서 전송되는 파라메터
+		kr/or/ddit/msg/message.properties      // 다국어 서비스가 준비되지 않은 기타 국가에 서비스
+		kr/or/ddit/msg/message_ko.properties   // 한국에서 접근 후 한국어 서비스
+		kr/or/ddit/msg/message_en.properties   // 미국에서 접근 후 영어 서비스
+	 -->
+	 <bean id="localeResolver" class="org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver"></bean>
+	 
+	 <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource"
+	 	p:basename="kr/or/cmk/msg/message"
+	 	p:defaultEncoding="UTF-8">
+	 </bean>
+	 
+	 <bean id="msgAcessor" class="org.springframework.context.support.MessageSourceAccessor"
+	 	c:messageSource-ref="messageSource">
+	 </bean>
+</beans>
+
+
+
+
+
+
