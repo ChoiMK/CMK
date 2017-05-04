@@ -11,6 +11,7 @@
 	
 	<sqlMap resource="kr/or/cmk/ibatis/mapper/board.xml"/>
 	<sqlMap resource="kr/or/cmk/ibatis/mapper/member.xml"/>
+	<sqlMap resource="kr/or/cmk/ibatis/mapper/ziptb.xml"/>
 </sqlMapConfig>
 
 

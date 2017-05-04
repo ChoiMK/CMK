@@ -62,11 +62,13 @@ public class FreeBoardServiceImpl implements FreeBoardService{
 		return fileItemInfo;
 	}
 	
+	
 	@Transactional(propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
 	@Override
 	public void insertBoardReplyInfo(BoardVO boardInfo) throws Exception{
 			dao.insertBoardReplyInfo(boardInfo);
 	}
+	
 	
 	@Transactional(propagation=Propagation.REQUIRED, readOnly=true)
 	@Override

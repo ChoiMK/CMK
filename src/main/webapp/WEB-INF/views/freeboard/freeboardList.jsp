@@ -63,7 +63,6 @@
 							${boardInfo.bo_title }
 							
 						  </td>	
-							
 							<td>${boardInfo.bo_nickname }</td>
 							<td>${boardInfo.bo_reg_date.substring(0,10) }</td>
 							<td>${boardInfo.bo_hit }</td>
@@ -75,7 +74,7 @@
 	${pageHtml}
 </div>
 <div >
-<form action="${pageContext.request.contextPath}/freeboard/freeboardList.do" method="post" class="form-inline pull-right">
+<form action="${pageContext.request.contextPath}/freeboard/main.do" method="post" class="form-inline pull-right">
 		<input id="search_keyword" name="search_keyword" type="text" placeholder="검색어 입력..." class="form-control" />
 		<select class="form-control" name="search_keycode" >
 			<option>검색조건</option>

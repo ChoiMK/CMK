@@ -9,6 +9,8 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import kr.or.cmk.vo.FileItemVO;
+
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.view.AbstractView;
 
@@ -23,8 +25,9 @@ public class FileDownloadView extends AbstractView {
 	protected void renderMergedOutputModel(Map<String, Object> model,
 			HttpServletRequest request, HttpServletResponse response) throws Exception {
 		File downloadFile = (File)model.get("downloadFile");
+		FileItemVO fileInfo = (FileItemVO) model.get("fileInfo");
 		
-		response.setHeader("Content-Disposition", "attachment;filename=" + downloadFile.getName());
+		response.setHeader("Content-Disposition", "attachment;filename=" + fileInfo.getFile_name());
 		response.setContentType("application/octet-stream");
 		response.setContentLength((int)downloadFile.length());
 		

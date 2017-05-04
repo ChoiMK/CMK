@@ -65,13 +65,8 @@ $('form[name=boardForm]').submit(function(){
 		}
 		
 		var content = $('#bo_content').summernote('code');
-		
 		$(this).append('<input type="hidden" name="bo_writer" value="${LOGIN_MEMBERINFO.mem_id}">');
-		
 		$(this).append("<input type='hidden' name='bo_content' value='"+content+"'>");
-		
-		
-		
 		$(this).append('<input type="hidden" name="bo_ip" value="${pageContext.request.remoteAddr}">');
 		$(this).attr('action', '${pageContext.request.contextPath}/freeboard/insertBoardInfo.do'); 	
 		
@@ -82,10 +77,7 @@ $('form[name=boardForm]').submit(function(){
  		if(!(fileCheck($("#file02").val()))){
  			return false;
  		}
-
-		
 });
-
 
 function fileCheck(fileName){
 	if(fileName != ""){
@@ -99,9 +91,8 @@ function fileCheck(fileName){
 }
 
 
-
 $('#list').click(function(){
-	$(location).attr('href','${pageContext.request.contextPath}/freeboard/freeboardList.do');
+	$(location).attr('href','${pageContext.request.contextPath}/freeboard/main.do');
 });
 
 
@@ -137,13 +128,13 @@ $('#list').click(function(){
 	<div class="form-group">
 		<label class="control-label col-sm-2" for="file01">첨부파일1:</label>
 		<div class="col-sm-10">
-			 <input type="file" class="filestyle" id="file01" name="files" data-buttonName="btn-primary">
+			 <input type="file" class="filestyle" id="file01" name="file1" data-buttonName="btn-primary">
 		</div>
 	</div>
 	<div class="form-group">
 		<label class="control-label col-sm-2" for="file02">첨부파일2:</label>
 		<div class="col-sm-10">
-			 <input type="file" class="filestyle" id="file02" name="files" data-buttonName="btn-primary">
+			 <input type="file" class="filestyle" id="file02" name="file2" data-buttonName="btn-primary">
 		</div>
 	</div>
 	<div class="form-group"> 

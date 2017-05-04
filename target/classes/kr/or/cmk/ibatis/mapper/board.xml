@@ -147,7 +147,7 @@
    <select id="fileitemInfo" parameterClass="map" resultClass="fileitemVO">
 		SELECT * 
 			FROM FILEITEM
-		WHERE FILE_SEQ = #file_seq#
+		WHERE FILE_SEQ = #file_Seq#
 	</select>
 	
 	<select id="incrementSeq" parameterClass="boardVO" resultClass="string">

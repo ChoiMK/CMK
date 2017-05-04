@@ -38,11 +38,11 @@ $(function(){
     });
     
     $('#list').click(function(){
-    	$(location).attr('href','${pageContext.request.contextPath}/freeboard/freeboardList.do');
+    	$(location).attr('href','${pageContext.request.contextPath}/freeboard/main.do');
     });
     
     $("#delete_btn").click(function(){
-    	$(location).attr('href','${pageContext.request.contextPath}/freeboard/deleteBoardInfo.do?bo_no=${boardInfo.bo_no}');
+    	$(location).attr('href','${pageContext.request.contextPath}/freeboard/deleteBoardInfo/${boardInfo.bo_no}.do');
     });
     
     $('#reply').click(function(){
@@ -78,18 +78,6 @@ $(function(){
 		</div>
 	</div>
 	<div class="form-group">
-		<label class="control-label col-sm-2" for="bo_pwd">패스워드:</label>
-		<div class="col-sm-10"> 
-			<input type="password" class="form-control" id="bo_pwd" name="bo_pwd" value="${boardInfo.bo_pwd }" >
-		</div>
-	</div>
-	<div class="form-group">
-		<label class="control-label col-sm-2" for="bo_mail">메일:</label>
-		<div class="col-sm-10"> 
-			<input type="text" class="form-control" id="bo_mail" name="bo_mail" value="${boardInfo.bo_mail }" >
-		</div>
-	</div>
-	<div class="form-group">
 		<label class="control-label col-sm-2" for="bo_content">내용:</label>
 		<div class="col-sm-10"> 
 			<div id="bo_content"></div>
@@ -97,14 +85,14 @@ $(function(){
 	</div>
 	<div class="form-group">
 		<label class="control-label col-sm-2" for="bo_content">첨부파일:</label>
-		<div id="myCarousel" class="carousel slide" data-ride="carousel">
-			<!-- Indicators -->
-			<ol class="carousel-indicators">
-				<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-				<li data-target="#myCarousel" data-slide-to="1"></li>
-			</ol>
-	
-			<!-- Wrapper for slides -->
+			<div id="myCarousel" class="carousel slide" data-ride="carousel">
+				<!-- Indicators -->
+				<ol class="carousel-indicators">
+					<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+					<li data-target="#myCarousel" data-slide-to="1"></li>
+				</ol>
+
+				<!-- Wrapper for slides -->
 			<div class="carousel-inner" role="listbox" style="height: 200px;">
 			<c:forEach items="${boardInfo.attachFileItemList}" var="fileitem" varStatus="stat">
 				<c:if test="${stat.first }">
@@ -113,13 +101,13 @@ $(function(){
 				<c:if test="${stat.last }">
 					<div class="item">
 				</c:if>
-				<img src="http://localhost/file/${fileitem.file_save_name}" alt="pic${stat.count}"
+				<img src="http://192.168.201.30/file/${fileitem.file_save_name}" alt="pic${stat.count}"
 					onclick="javascript:location.href='${pageContext.request.contextPath}/freeboard/fileDownload.do?fileSeq=${fileitem.file_seq}'">
 				</div>
 			</c:forEach>
 			</div>
-			
-			
+
+
 			<!-- Left and right controls -->
 			<a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
 			<a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>

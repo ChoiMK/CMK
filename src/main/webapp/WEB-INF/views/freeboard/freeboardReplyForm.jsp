@@ -32,7 +32,7 @@ $(function(){
 	});
     
     $('#list').click(function(){
-    	$(location).attr('href','${pageContext.request.contextPath}/freeboard/freeboardList.do');
+    	$(location).attr('href','${pageContext.request.contextPath}/freeboard/main.do');
     });
 
 
@@ -65,18 +65,6 @@ $(function(){
 		<label class="control-label col-sm-2" for="bo_nickname">작성자 대화명:</label>
 		<div class="col-sm-10"> 
 			<input type="text" class="form-control" id="bo_nickname" name="bo_nickname" value="${LOGIN_MEMBERINFO.mem_name}" >
-		</div>
-	</div>
-	<div class="form-group">
-		<label class="control-label col-sm-2" for="bo_pwd">패스워드:</label>
-		<div class="col-sm-10"> 
-			<input type="password" class="form-control" id="bo_pwd" name="bo_pwd" >
-		</div>
-	</div>
-	<div class="form-group">
-		<label class="control-label col-sm-2" for="bo_mail">메일:</label>
-		<div class="col-sm-10"> 
-			<input type="password" class="form-control" id="bo_mail" name="bo_mail" >
 		</div>
 	</div>
 	<div class="form-group">
